@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="191.023px" height="253.883px" viewBox="0 0 191.023 253.883" enable-background="new 0 0 191.023 253.883"
+	 xml:space="preserve">
+<g>
+	<path stroke="#FFFFFF" stroke-width="10" stroke-miterlimit="10" d="M33,129.28
+		c-14-3.416-25.575-16.769-25.575-32.732c0-18.55,15.53-33.588,34.08-33.588c1.202,0,2.374,0.066,3.544,0.189
+		c-0.056-1.011-0.12-2.027-0.12-3.053C44.929,29.668,69.533,5,99.963,5c26.135,0,47.878,18.204,53.534,42.618
+		c18.744,4.105,32.526,20.795,32.526,40.771c0,21.285-16.023,38.838-37.023,41.41L33,129.28z"/>
+	<g fill="#FFFFFF">
+		<circle cx="45" cy="148.883" r="5"/>
+		<circle cx="35" cy="168.883" r="5"/>
+		<circle cx="25" cy="188.883" r="5"/>
+		<circle cx="15" cy="208.883" r="5"/>
+		<circle cx="5" cy="228.883" r="5"/>
+	</g>
+	<g fill="#FFFFFF">
+		<circle cx="104" cy="148.883" r="5"/>
+		<circle cx="94" cy="168.883" r="5"/>
+		<circle cx="84" cy="188.883" r="5"/>
+		<circle cx="74" cy="208.883" r="5"/>
+		<circle cx="64" cy="228.883" r="5"/>
+	</g>
+	<g fill="#FFFFFF">
+		<circle cx="75" cy="148.883" r="5"/>
+		<circle cx="65" cy="168.883" r="5"/>
+		<circle cx="55" cy="188.883" r="5"/>
+		<circle cx="45" cy="208.883" r="5"/>
+		<circle cx="35" cy="228.883" r="5"/>
+		<circle cx="25" cy="248.883" r="5"/>
+	</g>
+	<g fill="#FFFFFF">
+		<circle cx="131" cy="148.883" r="5"/>
+		<circle cx="121" cy="168.883" r="5"/>
+		<circle cx="111" cy="188.883" r="5"/>
+		<circle cx="101" cy="208.883" r="5"/>
+		<circle cx="91" cy="228.883" r="5"/>
+		<circle cx="81" cy="248.883" r="5"/>
+	</g>
+</g>
+</svg>

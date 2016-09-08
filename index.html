@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+    <head>
+        <meta name="charset" value="utf-8">
+        <title>Roker</title>
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700|Open+Sans:400,300,800" type="text/css">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <dl id="weather_data">
+            <dt>Currently</dt>
+            <dd id="current_temp"></dd>
+            <dt>High</dt>
+            <dd id="current_high"></dd>
+            <dt>Low</dt>
+            <dd id="current_low"></dd>
+            <img id="weather_condition" alt="">
+        </dl>
+        <div id="weather_chart"></div>
+
+        <script src="js/libs/jsonp.js"></script>
+        <script src="js/libs/q.js"></script>
+        <script src="js/libs/highcharts_standalone_adapter.js"></script>
+        <script src="js/libs/highcharts.js"></script>
+        <script src="js/weather_api.js"></script>
+        <script src="js/weather_station.js"></script>
+        <script>
+            ;(function(root) {
+                const API_KEY = 'YOUR_WEATHER_UNDERGROUND_API_KEY';
+                const REFRESH_RATE = 1000 * 60 * 150; // 150 minutes
+
+                function goFullScreen(element) {
+                    if (element.requestFullscreen) {
+                        element.requestFullscreen();
+                    }
+                    else if (element.webkitRequestFullscreen) {
+                        element.webkitRequestFullscreen();
+                    }
+                    else if (element.mozRequestFullscreen) {
+                        element.mozRequestFullscreen();
+                    }
+                    else if (element.msRequestFullscreen) {
+                        element.msRequestFullscreen();
+                    }
+                }
+
+                document.documentElement.addEventListener('click', function(e) {
+                    goFullScreen(document.documentElement);
+                });
+
+                root.controllers = {};
+                root.controllers.weather_station = new WeatherStation(API_KEY);
+
+                setTimeout(function() {
+                    window.location.reload();
+                }, REFRESH_RATE);
+            }(window));
+        </script>
+    </body>
+</html>

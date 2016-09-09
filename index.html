@@ -26,7 +26,6 @@
         <script src="js/weather_station.js"></script>
         <script>
             ;(function(root) {
-                const API_KEY = 'YOUR_WEATHER_UNDERGROUND_API_KEY';
                 const REFRESH_RATE = 1000 * 60 * 150; // 150 minutes
 
                 function goFullScreen(element) {
@@ -48,8 +47,7 @@
                     goFullScreen(document.documentElement);
                 });
 
-                root.controllers = {};
-                root.controllers.weather_station = new WeatherStation(API_KEY);
+                var weather_station = new WeatherStation(YOUR_API_KEY);
 
                 setTimeout(function() {
                     window.location.reload();

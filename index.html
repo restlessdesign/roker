@@ -22,31 +22,11 @@
         <script src="js/libs/q.js"></script>
         <script src="js/libs/highcharts_standalone_adapter.js"></script>
         <script src="js/libs/highcharts.js"></script>
+        <script src="js/kiosk.js"></script>
         <script src="js/weather_api.js"></script>
         <script src="js/weather_station.js"></script>
         <script>
             ;(function(root) {
-                const REFRESH_RATE = 1000 * 60 * 150; // 150 minutes
-
-                function goFullScreen(element) {
-                    if (element.requestFullscreen) {
-                        element.requestFullscreen();
-                    }
-                    else if (element.webkitRequestFullscreen) {
-                        element.webkitRequestFullscreen();
-                    }
-                    else if (element.mozRequestFullscreen) {
-                        element.mozRequestFullscreen();
-                    }
-                    else if (element.msRequestFullscreen) {
-                        element.msRequestFullscreen();
-                    }
-                }
-
-                document.documentElement.addEventListener('click', function(e) {
-                    goFullScreen(document.documentElement);
-                });
-
                 try {
                     var weather_station = new WeatherStation(YOUR_API_KEY);
                 }
@@ -56,6 +36,13 @@
                     };
                 }
 
+                // Refresh every two hours. Something here is currently leaking
+                // memory, and slowly brings Raspbian to a halt. Once a stable
+                // build is released, or the leak is determined, this can be
+                // refactored to make an XHR to update the page data on-the-fly.
+                //
+                // @see https://github.com/restlessdesign/roker/issues/5
+                const REFRESH_RATE = 1000 * 60 * 60 * 2;
                 setTimeout(function() {
                     window.location.reload();
                 }, REFRESH_RATE);

@@ -7,11 +7,23 @@ A clean and simple weather dashboard that displays the current temperature and c
 
 This was initially designed as a full-screen dashboard meant to run on a Raspberry Pi hooked up to a 9" display, but feel free to use to your liking!
 
+## Configuration
+
+You must first acquire an API key from Weather Underground. Once you have that, run the following script to add your key:
+
+```bash
+$ ./configure
+```
+
 ## Installation
 
-You must first acquire an API key from Weather Underground. Once you have that, edit `index.html` to include your key.
-
 This project currently assumes that are capable of deploying this code to a web server (remote or local). Future versions may include a script to run a local server out-of-the-box.
+
+To run locally, use the following command:
+
+```bash
+$ python -m SimpleHTTPServer
+```
 
 ## License
 

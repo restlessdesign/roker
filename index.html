@@ -47,7 +47,14 @@
                     goFullScreen(document.documentElement);
                 });
 
-                var weather_station = new WeatherStation(YOUR_API_KEY);
+                try {
+                    var weather_station = new WeatherStation(YOUR_API_KEY);
+                }
+                catch (e) {
+                    if (e.name === 'ReferenceError') {
+                        console.warn('You must enter your Weather Underground API key! Run the ./configure script to add your key.');
+                    };
+                }
 
                 setTimeout(function() {
                     window.location.reload();

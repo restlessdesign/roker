@@ -5,6 +5,10 @@
     var MAX_TEMP = 70;
     var MIN_TEMP = 10;
 
+// Setup _______________________________________________________________________
+
+    Q.longStackSupport = true;
+
 // Constructor _________________________________________________________________
 
     function WeatherStation(api_key) {
@@ -17,89 +21,7 @@
         }
 
         this.api = new WeatherApi(api_key, 'NY', 'Brooklyn');
-
-        Q.longStackSupport = true;
-        Q.all([
-            this._getAlerts(),
-            this._getCurrent(),
-            this._getToday(),
-            this._getHourly()
-        ]).spread(function(alerts_response, current_response, today_response, hourly_forecast_response) {
-            var alerts = alerts_response.alerts;
-            var current = current_response.current_observation;
-            var today = today_response.forecast.simpleforecast.forecastday[0];
-            var hourly = hourly_forecast_response.hourly_forecast;
-            var timestamps = [];
-            var temperatures = [];
-            var precipitation = [];
-            var condition_icon = document.getElementById('weather_condition');
-
-            // Display alerts
-            if (alerts.length) {
-                // @todo iterate and display alerts
-            }
-
-            // Display current conditions
-            document.getElementById('current_temp').textContent = Math.round(current.temp_f) + '°';
-            document.getElementById('current_high').textContent = Math.round(today.high.fahrenheit) + '°';
-            document.getElementById('current_low').textContent = Math.round(today.low.fahrenheit) + '°';
-
-            switch (current.icon) {
-                case 'chanceflurries':
-                case 'flurries':
-                case 'chancesnow':
-                case 'snow':
-                    condition_icon.src = 'images/snowy.svg';
-                    break;
-
-                case 'chancerain':
-                case 'rain':
-                case 'chancesleet':
-                case 'sleet':
-                    condition_icon.src = 'images/rainy.svg';
-                    break;
-
-                case 'chancetstorms':
-                case 'tstorms':
-                    condition_icon.src = 'images/stormy.svg';
-                    break;
-
-                case 'clear':
-                case 'sunny':
-                    condition_icon.src = 'images/sunny.svg';
-                    break;
-
-                case 'cloudy':
-                    condition_icon.src = 'images/cloudy.svg';
-                    break;
-
-                case 'mostlycloudy':
-                case 'partlysunny':
-                    condition_icon.src = 'images/partly_sunny.svg';
-                    break;
-
-                case 'mostlysunny':
-                case 'partlycloudy':
-                    condition_icon.src = 'images/partly_cloudy.svg';
-                    break;
-
-                default:
-                    condition_icon.style.display = 'none';
-
-            }
-
-            // Parse hourly forecast (12 hours max)
-            for (var i = 0, limit = 12; i < limit; i++) {
-                timestamps.push(hourly[i].FCTTIME.civil);
-                temperatures.push(parseInt(hourly[i].temp.english, 10));
-                precipitation.push(parseInt(hourly[i].pop, 10));
-            }
-
-            // Render chart
-            self._buildChart(timestamps, temperatures, precipitation);
-        }).catch(function(x) {
-            console.error(x);
-        });
+        this.fetchData();
     }
 
 // Private Methods ______________________________________________________________
@@ -266,6 +188,96 @@
             tooltip: {
                 shared: true
             }
+        });
+    };
+
+// Event Handlers ______________________________________________________________
+
+    WeatherStation.prototype._onData = function(alerts_response, current_response, today_response, hourly_forecast_response) {
+        var alerts = alerts_response.alerts;
+        var current = current_response.current_observation;
+        var today = today_response.forecast.simpleforecast.forecastday[0];
+        var hourly = hourly_forecast_response.hourly_forecast;
+        var timestamps = [];
+        var temperatures = [];
+        var precipitation = [];
+        var condition_icon = document.getElementById('weather_condition');
+
+        // Display alerts
+        if (alerts.length) {
+            // @todo iterate and display alerts
+        }
+
+        // Display current conditions
+        document.getElementById('current_temp').textContent = Math.round(current.temp_f) + '°';
+        document.getElementById('current_high').textContent = Math.round(today.high.fahrenheit) + '°';
+        document.getElementById('current_low').textContent = Math.round(today.low.fahrenheit) + '°';
+
+        switch (current.icon) {
+            case 'chanceflurries':
+            case 'flurries':
+            case 'chancesnow':
+            case 'snow':
+                condition_icon.src = 'images/snowy.svg';
+                break;
+
+            case 'chancerain':
+            case 'rain':
+            case 'chancesleet':
+            case 'sleet':
+                condition_icon.src = 'images/rainy.svg';
+                break;
+
+            case 'chancetstorms':
+            case 'tstorms':
+                condition_icon.src = 'images/stormy.svg';
+                break;
+
+            case 'clear':
+            case 'sunny':
+                condition_icon.src = 'images/sunny.svg';
+                break;
+
+            case 'cloudy':
+                condition_icon.src = 'images/cloudy.svg';
+                break;
+
+            case 'mostlycloudy':
+            case 'partlysunny':
+                condition_icon.src = 'images/partly_sunny.svg';
+                break;
+
+            case 'mostlysunny':
+            case 'partlycloudy':
+                condition_icon.src = 'images/partly_cloudy.svg';
+                break;
+
+            default:
+                condition_icon.style.display = 'none';
+
+        }
+
+        // Parse hourly forecast (12 hours max)
+        for (var i = 0, limit = 12; i < limit; i++) {
+            timestamps.push(hourly[i].FCTTIME.civil);
+            temperatures.push(parseInt(hourly[i].temp.english, 10));
+            precipitation.push(parseInt(hourly[i].pop, 10));
+        }
+
+        // Render chart
+        this._buildChart(timestamps, temperatures, precipitation);
+    };
+
+// Public Methods ______________________________________________________________
+
+    WeatherStation.prototype.fetchData = function() {
+        Q.all([
+            this._getAlerts(),
+            this._getCurrent(),
+            this._getToday(),
+            this._getHourly()
+        ]).spread(this._onData).catch(function(x) {
+            console.error(x);
         });
     };
 
